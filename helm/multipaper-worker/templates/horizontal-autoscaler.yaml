@@ -1,0 +1,24 @@
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ .Release.Name }}-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: StatefulSet
+    name: {{ .Release.Name }}
+  minReplicas: 3
+  maxReplicas: 4
+  metrics:
+  - type: Object
+    object:
+      metric:
+        name: {{ .Values.autoscaler.metrics_name }}
+      describedObject:
+        apiVersion: {{ .Values.autoscaler.metrics_api }}
+        kind: {{ .Values.autoscaler.metrics_kind }}
+        name: {{ .Values.autoscaler.metrics_label }}
+      target:
+        type: {{ .Values.autoscaler.target_type }}
+        value: {{ .Values.autoscaler.target_value }}
+  

@@ -1,0 +1,31 @@
+### Values untuk Server Minecraft
+
+minecraft:
+  eula: 'TRUE'
+  gamemode: 'creative' # Game mode jika tidak diatur akan default di survival
+  motd: 'Minecraft Server Kevin' # Message of the Day (Optional)
+  type: 'PAPER'
+  paper_url: 'https://multipaper.io/api/v2/projects/multipaper/versions/1.18.2/builds/40/downloads/multipaper-1.18.2-40.jar'
+  ops: 'KDKnive'
+  online_mode: 'FALSE'
+  max_players: 200
+  init_memory: '2G'
+  max_memory: '4G'
+  nodeport: '3212' # 4 digit pertama dari nodeport yang ingin diberikan untuk setiap replika
+
+autoscaler:
+  metrics_name: 'bungeecord_online_average'
+  metrics_api: '/v1'
+  metrics_kind: 'Service'
+  metrics_label: 'bungee'
+  target_type: 'Value'
+  target_value: 18
+
+resources: # Resources awal untuk pod
+  limits:
+    memory: 4Gi
+  requests:
+    memory: 2Gi
+
+serviceAccount:
+  create: true

@@ -1,0 +1,21 @@
+### Values untuk Server Minecraft
+
+bungeecord:
+  type: 'WATERFALL' # Game mode jika tidak diatur akan default di survival
+  version: 'latest' # Message of the Day (Optional)
+  build_id: 'latest' # Port dari pod Minecraft yang akan dijalankan
+  rcon: 'TRUE'
+  bungee_port: 31323 # Port dari Minecraft akan dialihkan kesini karena batasan port dari Google
+  master_port: 31324
+  init_memory: '1G'
+  max_memory: '2G'
+  plugins: 91924, 55011, 86398
+
+resources: # Resources awal untuk pod
+  limits:
+    memory: 2Gi
+  requests:
+    memory: 1Gi
+
+serviceAccount:
+  create: true

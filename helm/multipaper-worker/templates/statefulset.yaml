@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata: # Nama dan label dari deployment
+  name: {{ .Release.Name }}
+  labels:
+    app: {{ .Release.Name }}
+  annotations:
+    service-per-pod-label: pod-name
+    service-per-pod-ports: "{{ .Values.resources.limits.nodeport }}:{{ .Values.resources.limits.nodeport }}"
+    service-per-pod-type: NodePort  
+spec:
+  replicas: 3 # Untuk sekarang hanya menggunakan 1 replica
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  serviceName: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+      annotations:
+        pod-name-label: pod-name
+    spec:
+      containers:
+      - name: {{ .Release.Name }}
+        image: itzg/minecraft-server:latest # Mengambil image Minecraft dari repository docker
+        resources:
+          limits:
+            memory: {{ .Values.resources.limits.memory }}
+          requests:
+            memory: {{ .Values.resources.requests.memory }}
+        env:
+          - name:  EULA
+            value: '{{ .Values.minecraft.eula }}'
+          - name: MODE
+            value: '{{ .Values.minecraft.gamemode }}'
+          - name: MOTD
+            value: '{{ .Values.minecraft.motd }}'
+          - name: TYPE
+            value: '{{ .Values.minecraft.type }}'
+          - name: PAPER_DOWNLOAD_URL
+            value: '{{ .Values.minecraft.paper_url }}'
+          - name: OPS
+            value: '{{ .Values.minecraft.ops }}'
+          - name: ONLINE_MODE
+            value: '{{ .Values.minecraft.online_mode }}'
+          - name: MAX_PLAYERS
+            value: '{{ .Values.minecraft.max_players }}'
+          - name: INIT_MEMORY
+            value: '{{ .Values.minecraft.init_memory }}'
+          - name: MAX_MEMORY
+            value: '{{ .Values.minecraft.max_memory }}'
+        ports:
+        - containerPort: 32120
+          name: lobby-0
+        - containerPort: 32121
+          name: lobby-1
+        - containerPort: 32122
+          name: lobby-2
+        - containerPort: 32123
+          name: lobby-3
+        - containerPort: 32124
+          name: lobby-4
+        - containerPort: 32125
+          name: lobby-5
+        - containerPort: 32126
+          name: lobby-6
+        - containerPort: 32127
+          name: lobby-7
+        - containerPort: 32128
+          name: lobby-8
+        - containerPort: 32129
+          name: lobby-9
+        volumeMounts: # Path dari directory yang akan digunakan dan di mount ke PV
+          - name: {{ .Release.Name }}-data
+            mountPath:  '/data'
+      topologySpreadConstraints:
+      - labelSelector:
+          matchLabels:
+            app: {{ .Release.Name }}
+        maxSkew: 1
+        topologyKey: node
+        whenUnsatisfiable: ScheduleAnyway
+  volumeClaimTemplates:
+  - metadata:
+      name: {{ .Release.Name }}-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 5Gi
