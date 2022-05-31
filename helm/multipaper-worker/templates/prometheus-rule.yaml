@@ -1,0 +1,21 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    release: kube-prometheus-stack
+  name: minecraft-rule
+  namespace: minecraft
+spec:
+  groups:
+  - name: minecraft-rule
+    rules:
+    - record: minecraft_players_total
+      expr: sum(mc_players_online_total{namespace="minecraft"})
+      labels:
+        namespace: minecraft
+        service: multipaper
+    - record: minecraft_replica_total
+      expr: kube_statefulset_replicas{namespace="minecraft"}
+      labels:
+        namespace: minecraft
+        service: multipaper

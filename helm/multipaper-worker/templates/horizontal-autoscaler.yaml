@@ -1,14 +1,14 @@
 apiVersion: autoscaling/v2beta2
-kind: HorizontalPodAutoscaler
+kind: HorizontalPodAutoscaler # HPA
 metadata:
-  name: {{ .Release.Name }}-hpa
+  name: {{ .Release.Name }}-hpa # Nama dari HPA
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
-    kind: StatefulSet
-    name: {{ .Release.Name }}
-  minReplicas: 3
-  maxReplicas: 4
+    kind: StatefulSet 
+    name: {{ .Release.Name }} # Nama statefulset yang akan di-autoscaling
+  minReplicas: 3 # Minimal replika yang dapat dijalankan
+  maxReplicas: 10 # Maksimal replika yang dapat dijalankan
   metrics:
   - type: Object
     object:

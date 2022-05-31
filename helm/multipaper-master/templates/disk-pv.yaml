@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: PersistentVolume # Membuat PV
+metadata:
+  name: {{ .Release.Name }}-data
+spec:
+  storageClassName: "{{ .Release.Name }}-storage"
+  capacity:
+    storage: {{ .Values.resources.storage }}
+  accessModes:
+    - ReadWriteOnce
+  claimRef:
+    namespace: {{ .Release.Namespace }}
+    name: {{ .Release.Name }}-data-pvc
+  gcePersistentDisk:
+    pdName: {{ .Release.Name }}-disk
+    fsType: ext4
+---
+apiVersion: v1
+kind: PersistentVolumeClaim # Membuat PVC
+metadata:
+  name: {{ .Release.Name }}-data-pvc
+spec:
+  storageClassName: "{{ .Release.Name }}-storage"
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.resources.storage }}

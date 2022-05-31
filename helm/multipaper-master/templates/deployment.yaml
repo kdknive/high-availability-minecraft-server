@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: # Nama dan label dari deployment
+  name: {{ .Release.Name }}
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  replicas: 1 # Untuk sekarang hanya menggunakan 1 replica
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      volumes:
+      - name: {{ .Release.Name }}-data # Menggunakan persistent volume minecraft-data
+        persistentVolumeClaim:
+          claimName: {{ .Release.Name }}-data-pvc # Menggunakan persistent volume claim minecraft-data-claim
+      containers:
+      - name: {{ .Release.Name }} 
+        image: itzg/minecraft-server:latest # Mengambil image Bungeecord dari repository docker
+        resources:
+          limits:
+            memory: {{ .Values.resources.limits.memory }}
+          requests:
+            memory: {{ .Values.resources.requests.memory }}
+        env:
+          - name: EULA
+            value: '{{ .Values.minecraft.eula }}'
+          - name: MODE
+            value: '{{ .Values.minecraft.gamemode }}'
+          - name: MOTD
+            value: '{{ .Values.minecraft.motd }}'
+          - name: TYPE
+            value: '{{ .Values.minecraft.type }}'
+          - name: CUSTOM_SERVER
+            value: '{{ .Values.minecraft.custom_url }}'
+          - name: OPS
+            value: '{{ .Values.minecraft.ops }}'
+          - name: ONLINE_MODE
+            value: '{{ .Values.minecraft.online_mode }}'
+          - name: MAX_PLAYERS
+            value: '{{ .Values.minecraft.max_players }}'
+          - name: INIT_MEMORY
+            value: '{{ .Values.minecraft.init_memory }}'
+          - name: MAX_MEMORY
+            value: '{{ .Values.minecraft.max_memory }}'
+        ports:
+        - containerPort: {{ .Values.minecraft.nodeport }}
+          name: master
+        volumeMounts: # Path dari directory yang akan digunakan dan di mount ke PV
+          - name: {{ .Release.Name }}-data
+            mountPath:  '/data'

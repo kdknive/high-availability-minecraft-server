@@ -1,0 +1,24 @@
+### Values untuk Server Master Minecraft
+
+minecraft:
+  eula: 'TRUE' # Harus TRUE untuk dapat menjalankan server Minecraft
+  gamemode: 'creative' # Game mode jika tidak diatur akan default di survival
+  motd: 'Minecraft Server Kevin' # Message of the Day (Optional)
+  type: 'CUSTOM' # Tipe server Minecraft yang dijalankan
+  custom_url: 'https://multipaper.io/api/v2/projects/multipaper/versions/1.18.2/builds/57/downloads/MultiPaper-Master-2.8.4-all.jar' # URL dari JAR server Minecraft yang akan dijalankan
+  ops: 'KDKnive' # Player yang akan dijadikan sebagai admin
+  online_mode: 'FALSE' # Harus FALSE, karena autentikasi akan dilakukan oleh server BungeeCord
+  max_players: 200 # Jumlah maksimal pemain yang dapat terhubung ke server
+  init_memory: '2G' # Memory awal yang akan digunakan oleh JVM
+  max_memory: '4G' # Batas maksimum memory yang dapat digunakan oleh JVM
+  nodeport: '31323'
+
+resources: # Resources awal untuk pod
+  limits:
+    memory: 4Gi # Batas maksimum memory yang dapat digunakan oleh pod
+  requests:
+    memory: 2Gi # Memory awal yang akan digunakan oleh pod
+  storage: 50
+
+serviceAccount:
+  create: true # True untuk membuat service account sebagai identifikasi dari pod

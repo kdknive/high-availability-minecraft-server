@@ -1,31 +1,31 @@
-### Values untuk Server Minecraft
+### Values untuk Server Worker Minecraft
 
 minecraft:
-  eula: 'TRUE'
+  eula: 'TRUE' # Harus TRUE untuk dapat menjalankan server Minecraft
   gamemode: 'creative' # Game mode jika tidak diatur akan default di survival
   motd: 'Minecraft Server Kevin' # Message of the Day (Optional)
-  type: 'PAPER'
-  paper_url: 'https://multipaper.io/api/v2/projects/multipaper/versions/1.18.2/builds/40/downloads/multipaper-1.18.2-40.jar'
-  ops: 'KDKnive'
-  online_mode: 'FALSE'
-  max_players: 200
-  init_memory: '2G'
-  max_memory: '4G'
+  type: 'CUSTOM' # Tipe server Minecraft yang dijalankan
+  custom_url: 'https://multipaper.io/api/v2/projects/multipaper/versions/1.18.2/builds/57/downloads/multipaper-1.18.2-57.jar' # URL dari JAR server Minecraft yang akan dijalankan
+  ops: 'KDKnive' # Player yang akan dijadikan sebagai admin
+  online_mode: 'FALSE' # Harus FALSE, karena autentikasi akan dilakukan oleh server BungeeCord
+  max_players: 25 # Jumlah maksimal pemain yang dapat terhubung ke server
+  init_memory: '2G' # Memory awal yang akan digunakan oleh JVM
+  max_memory: '4G' # Batas maksimum memory yang dapat digunakan oleh JVM
   nodeport: '3212' # 4 digit pertama dari nodeport yang ingin diberikan untuk setiap replika
 
 autoscaler:
-  metrics_name: 'bungeecord_online_average'
-  metrics_api: '/v1'
-  metrics_kind: 'Service'
-  metrics_label: 'bungee'
-  target_type: 'Value'
-  target_value: 18
+  metrics_name: 'minecraft_players_average' # Metrics yang akan dijadikan patokan dalam autoscaling
+  metrics_api: '/v1' # API dari metrics yang digunakan
+  metrics_kind: 'Service' # Jenis obyek dari metrics yang digunakan
+  metrics_label: 'multipaper' # Label dari metrics yang digunakan
+  target_type: 'Value' # Tipe target metrics yang akan digunakan
+  target_value: 18 # Batas minimum yang diperlukan sebelum autoscaling dilakukan
 
 resources: # Resources awal untuk pod
   limits:
-    memory: 4Gi
+    memory: 4Gi # Batas maksimum memory yang dapat digunakan oleh pod
   requests:
-    memory: 2Gi
+    memory: 2Gi # Memory awal yang akan digunakan oleh pod
 
 serviceAccount:
-  create: true
+  create: true # True untuk membuat service account sebagai identifikasi dari pod

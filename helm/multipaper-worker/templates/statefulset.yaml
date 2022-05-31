@@ -6,7 +6,7 @@ metadata: # Nama dan label dari deployment
     app: {{ .Release.Name }}
   annotations:
     service-per-pod-label: pod-name
-    service-per-pod-ports: "{{ .Values.resources.limits.nodeport }}:{{ .Values.resources.limits.nodeport }}"
+    service-per-pod-ports: "{{ .Values.minecraft.nodeport }}:{{ .Values.minecraft.nodeport }}"
     service-per-pod-type: NodePort  
 spec:
   replicas: 3 # Untuk sekarang hanya menggunakan 1 replica
@@ -38,8 +38,8 @@ spec:
             value: '{{ .Values.minecraft.motd }}'
           - name: TYPE
             value: '{{ .Values.minecraft.type }}'
-          - name: PAPER_DOWNLOAD_URL
-            value: '{{ .Values.minecraft.paper_url }}'
+          - name: CUSTOM_SERVER
+            value: '{{ .Values.minecraft.custom_url }}'
           - name: OPS
             value: '{{ .Values.minecraft.ops }}'
           - name: ONLINE_MODE
@@ -71,6 +71,8 @@ spec:
           name: lobby-8
         - containerPort: 32129
           name: lobby-9
+        - containerPort: 9940
+          name: metrics
         volumeMounts: # Path dari directory yang akan digunakan dan di mount ke PV
           - name: {{ .Release.Name }}-data
             mountPath:  '/data'
@@ -79,7 +81,7 @@ spec:
           matchLabels:
             app: {{ .Release.Name }}
         maxSkew: 1
-        topologyKey: node
+        topologyKey: nodes
         whenUnsatisfiable: ScheduleAnyway
   volumeClaimTemplates:
   - metadata:
