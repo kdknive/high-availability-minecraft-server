@@ -4,8 +4,7 @@ minecraft:
   eula: 'TRUE' # Harus TRUE untuk dapat menjalankan server Minecraft
   gamemode: 'creative' # Game mode jika tidak diatur akan default di survival
   motd: 'Minecraft Server Kevin' # Message of the Day (Optional)
-  type: 'CUSTOM' # Tipe server Minecraft yang dijalankan
-  custom_url: 'https://multipaper.io/api/v2/projects/multipaper/versions/1.18.2/builds/57/downloads/MultiPaper-Master-2.8.4-all.jar' # URL dari JAR server Minecraft yang akan dijalankan
+  plugins: 'https://multipaper.io/api/v2/projects/multipaper/versions/1.18.2/builds/58/downloads/MultiPaper-Master-2.8.4-all.jar'
   ops: 'KDKnive' # Player yang akan dijadikan sebagai admin
   online_mode: 'FALSE' # Harus FALSE, karena autentikasi akan dilakukan oleh server BungeeCord
   max_players: 200 # Jumlah maksimal pemain yang dapat terhubung ke server
