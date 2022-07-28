@@ -3,9 +3,9 @@
 #
 # Docs: https://github.com/PureGero/MultiPaper/blob/main/MULTIPAPER_YAML.md 
 
-bungeecordName: lobby-2
+bungeecordName: lobby-10
 useLocalPlayerCountForServerIsFullKick: false
-multipaperMasterAddress: 34.101.185.106:31324
+multipaperMasterAddress: 34.128.116.22:31323
 syncJsonFiles: true
 advertiseToBuiltInProxy: true
 syncScoreboards: true
@@ -14,7 +14,7 @@ filesToSyncOnStartup:
 - bukkit.yml
 - plugins/
 filesToSyncInRealTime:
-- plugins/
+# - plugins/
 filesToOnlyUploadOnServerStop:
 - plugins/MyPluginDirectory/my_big_database.db
 filesToNotSync:
